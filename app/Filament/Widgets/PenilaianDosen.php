@@ -11,6 +11,12 @@ use App\Models\M009PenilaianDosen;
 
 class PenilaianDosen extends BaseWidget
 {
+    protected int | string | array $columnSpan = 'full';
+
+    public static function canView(): bool
+    {
+        return auth()->user()->hasRole(['super_admin', 'mahasiswa']);
+    }
 
     public function table(Table $table): Table
     {
