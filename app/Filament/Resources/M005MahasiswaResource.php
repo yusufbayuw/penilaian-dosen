@@ -17,7 +17,15 @@ class M005MahasiswaResource extends Resource
 {
     protected static ?string $model = M005Mahasiswa::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static ?string $slug = 'mahasiswa';
+
+    protected static ?string $modelLabel = 'Mahasiswa';
+
+    protected static ?string $navigationLabel = 'Mahasiswa';
+    
+    protected static ?string $navigationGroup = 'Master Data';
 
     public static function form(Form $form): Form
     {

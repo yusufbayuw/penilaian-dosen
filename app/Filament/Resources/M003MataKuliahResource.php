@@ -17,8 +17,16 @@ class M003MataKuliahResource extends Resource
 {
     protected static ?string $model = M003MataKuliah::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
 
+    protected static ?string $slug = 'mata-kuliah';
+
+    protected static ?string $modelLabel = 'Mata Kuliah';
+
+    protected static ?string $navigationLabel = 'Mata Kuliah';
+    
+    protected static ?string $navigationGroup = 'Master Data';
+    
     public static function form(Form $form): Form
     {
         return $form

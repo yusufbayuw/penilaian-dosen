@@ -17,7 +17,15 @@ class M009PenilaianDosenResource extends Resource
 {
     protected static ?string $model = M009PenilaianDosen::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-pencil';
+
+    protected static ?string $slug = 'penilaian-dosen';
+
+    protected static ?string $modelLabel = 'Penilaian Dosen';
+
+    protected static ?string $navigationLabel = 'Penilaian Dosen';
+    
+    protected static ?string $navigationGroup = 'Penilaian';
 
     public static function form(Form $form): Form
     {

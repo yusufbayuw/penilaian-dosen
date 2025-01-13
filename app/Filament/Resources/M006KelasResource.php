@@ -20,7 +20,15 @@ class M006KelasResource extends Resource
 {
     protected static ?string $model = M006Kelas::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+
+    protected static ?string $slug = 'kelas';
+
+    protected static ?string $modelLabel = 'Kelas';
+
+    protected static ?string $navigationLabel = 'Kelas';
+    
+    protected static ?string $navigationGroup = 'Pembelajaran';
 
     public static function form(Form $form): Form
     {

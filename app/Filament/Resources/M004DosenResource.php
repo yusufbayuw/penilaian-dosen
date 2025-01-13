@@ -17,7 +17,15 @@ class M004DosenResource extends Resource
 {
     protected static ?string $model = M004Dosen::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
+
+    protected static ?string $slug = 'dosen';
+
+    protected static ?string $modelLabel = 'Dosen';
+
+    protected static ?string $navigationLabel = 'Dosen';
+    
+    protected static ?string $navigationGroup = 'Master Data';
 
     public static function form(Form $form): Form
     {

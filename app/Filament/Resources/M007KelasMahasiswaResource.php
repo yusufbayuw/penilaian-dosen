@@ -19,6 +19,14 @@ class M007KelasMahasiswaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $slug = 'kelas-mahasiswa';
+
+    protected static ?string $modelLabel = 'Kelas Mahasiswa';
+
+    protected static ?string $navigationLabel = 'Kelas Mahasiswa';
+    
+    protected static ?string $navigationGroup = 'Mapping';
+
     public static function form(Form $form): Form
     {
         return $form

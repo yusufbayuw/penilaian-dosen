@@ -17,7 +17,15 @@ class M001TahunAjaranResource extends Resource
 {
     protected static ?string $model = M001TahunAjaran::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
+    protected static ?string $slug = 'tahun-ajaran';
+
+    protected static ?string $modelLabel = 'Tahun Ajaran';
+
+    protected static ?string $navigationLabel = 'Tahun Ajaran';
+    
+    protected static ?string $navigationGroup = 'Master Data';
 
     public static function form(Form $form): Form
     {

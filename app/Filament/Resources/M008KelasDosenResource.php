@@ -19,6 +19,14 @@ class M008KelasDosenResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $slug = 'kelas-dosen';
+
+    protected static ?string $modelLabel = 'Kelas Dosen';
+
+    protected static ?string $navigationLabel = 'Kelas Dosen';
+    
+    protected static ?string $navigationGroup = 'Mapping';
+
     public static function form(Form $form): Form
     {
         return $form

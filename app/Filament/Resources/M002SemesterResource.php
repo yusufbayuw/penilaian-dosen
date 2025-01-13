@@ -17,7 +17,15 @@ class M002SemesterResource extends Resource
 {
     protected static ?string $model = M002Semester::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-adjustments-horizontal';
+
+    protected static ?string $slug = 'semester';
+
+    protected static ?string $modelLabel = 'Semester';
+
+    protected static ?string $navigationLabel = 'Semester';
+    
+    protected static ?string $navigationGroup = 'Master Data';
 
     public static function form(Form $form): Form
     {
