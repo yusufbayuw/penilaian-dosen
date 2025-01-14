@@ -20,9 +20,11 @@ class KelasMahasiswaRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('mahasiswa_id')
+                Forms\Components\Select::make('mahasiswa_id')
                     ->required()
-                    ->maxLength(255),
+                    ->searchable()
+                    ->preload()
+                    ->relationship('mahasiswa', 'nama'),
             ]);
     }
 

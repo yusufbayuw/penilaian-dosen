@@ -29,6 +29,8 @@ class M009RekapPenilaianDosenResource extends Resource
     
     protected static ?string $navigationGroup = 'Penilaian';
 
+    //protected static bool $shouldRegisterNavigation = false;
+
     public static function form(Form $form): Form
     {
         return $form

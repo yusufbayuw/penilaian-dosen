@@ -2,16 +2,19 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use App\Models\M009PenilaianDosen;
+use pxlrbt\FilamentExcel\Columns\Column;
+use Illuminate\Database\Eloquent\Builder;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use App\Filament\Resources\M009PenilaianDosenResource\Pages;
 use App\Filament\Resources\M009PenilaianDosenResource\RelationManagers;
-use App\Models\M009PenilaianDosen;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class M009PenilaianDosenResource extends Resource
 {
@@ -24,52 +27,14 @@ class M009PenilaianDosenResource extends Resource
     protected static ?string $modelLabel = 'Penilaian Dosen';
 
     protected static ?string $navigationLabel = 'Penilaian Dosen';
-    
+
     protected static ?string $navigationGroup = 'Penilaian';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Radio::make('q_01')
-                    ->label('Dosen menguasai materi perkuliahan?')
-                    ->options([
-                        1 => "Sangat Tidak Setuju",
-                        2 => "Tidak Setuju",
-                        3 => "Netral",
-                        4 => "Setuju",
-                        5 => "Sangat Setuju"
-                    ])
-                    ->inline()
-                    ->inlineLabel(false),
-                Forms\Components\Radio::make('q_02')
-                    ->label('Dosen mengajar semua materi perkulihan?')
-                    ->options([
-                        1 => "Sangat Tidak Setuju",
-                        2 => "Tidak Setuju",
-                        3 => "Netral",
-                        4 => "Setuju",
-                        5 => "Sangat Setuju"
-                    ])
-                    ->inline()
-                    ->inlineLabel(false),
-                Forms\Components\Radio::make('q_03')
-                    ->label('Dosen berkomunikasi dengan baik?')
-                    ->options([
-                        1 => "Sangat Tidak Setuju",
-                        2 => "Tidak Setuju",
-                        3 => "Netral",
-                        4 => "Setuju",
-                        5 => "Sangat Setuju"
-                    ])
-                    ->inline()
-                    ->inlineLabel(false),
-                Forms\Components\Select::make('kelas_mahasiswa_id')
-                    ->relationship('kelas_mahasiswa', 'id')
-                    ->hiddenOn('edit'),
-                Forms\Components\Select::make('kelas_dosen_id')
-                    ->relationship('kelas_dosen', 'id')
-                    ->hiddenOn('edit'),
+                //
             ]);
     }
 
@@ -80,12 +45,24 @@ class M009PenilaianDosenResource extends Resource
                 Tables\Columns\TextColumn::make('kelas_mahasiswa.kelas.nama')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kelas_mahasiswa.mahasiswa.nama')
+                /* Tables\Columns\TextColumn::make('kelas_mahasiswa.mahasiswa.nama')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable(), */
                 Tables\Columns\TextColumn::make('kelas_dosen.dosen.nama')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('q_01'),
+                Tables\Columns\TextColumn::make('q_02'),
+                Tables\Columns\TextColumn::make('q_03'),
+                Tables\Columns\TextColumn::make('q_04'),
+                Tables\Columns\TextColumn::make('q_05'),
+                Tables\Columns\TextColumn::make('q_06'),
+                Tables\Columns\TextColumn::make('q_07'),
+                Tables\Columns\TextColumn::make('q_08'),
+                Tables\Columns\TextColumn::make('q_09'),
+                Tables\Columns\TextColumn::make('q_10'),
+                Tables\Columns\TextColumn::make('q_11'),
+                Tables\Columns\TextColumn::make('q_12'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -101,6 +78,33 @@ class M009PenilaianDosenResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+            ])
+            ->headerActions([
+                ExportAction::make()->exports([
+                    ExcelExport::make()
+                        ->withColumns([
+                            Column::make('kelas_mahasiswa.kelas.nama')
+                                ->heading('Kelas'),
+                            Column::make('kelas_dosen.dosen.nama')
+                                ->heading('Dosen'),
+                            Column::make('kelas_mahasiswa.kelas.mata_kuliah.nama')
+                                ->heading('Mata Kuliah'),
+                            Column::make('q_01'),
+                            Column::make('q_02'),
+                            Column::make('q_03'),
+                            Column::make('q_04'),
+                            Column::make('q_05'),
+                            Column::make('q_06'),
+                            Column::make('q_07'),
+                            Column::make('q_08'),
+                            Column::make('q_09'),
+                            Column::make('q_10'),
+                            Column::make('q_11'),
+                            Column::make('q_12'),
+                        ])
+                        ->withFilename(fn (M009PenilaianDosen $record) => "Penilaian-Dosen-".date('Y-m-d').".xlsx")
+                        ->modifyQueryUsing(fn($query) => $query->where('is_done', true)),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\M006KelasResource\RelationManagers;
 
+use App\Models\M004Dosen;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -25,6 +26,8 @@ class KelasDosenRelationManager extends RelationManager
                 Forms\Components\Select::make('dosen_id')
                     ->label('Pilih Dosen')
                     ->required()
+                    ->preload()
+                    ->searchable()
                     ->relationship('dosen', 'nama'),
             ]);
     }
