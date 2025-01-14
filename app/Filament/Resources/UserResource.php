@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
@@ -35,16 +36,21 @@ class UserResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->unique(ignoreRecord:true)
                     ->required(),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('username')
+                    ->unique(ignoreRecord:true)
+                    ->required(),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(),
+                    ->required()
+                    ->dehydrateStateUsing(static fn (null|string $state): null|string => filled($state) ? Hash::make($state) : null,)
+                    ->dehydrated(static fn (null|string $state): bool => filled($state)),
                 Forms\Components\Select::make('dosen_id')
-                    ->relationship('dosen', 'id'),
+                    ->relationship('dosen', 'nama'),
                 Forms\Components\Select::make('mahasiswa_id')
-                    ->relationship('mahasiswa', 'id'),
-                Forms\Components\TextInput::make('username'),
+                    ->relationship('mahasiswa', 'nama'),
+
             ]);
     }
 

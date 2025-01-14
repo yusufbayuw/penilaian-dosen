@@ -58,9 +58,21 @@ class M002SemesterResource extends Resource
                 Tables\Columns\TextColumn::make('kode')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
+                    ->boolean()
+                    ->action(function ($record, $column) {
+                        $name = $column->getName();
+                        $record->update([
+                            $name => !$record->$name
+                        ]);
+                    }),
                 Tables\Columns\IconColumn::make('penilaian')
-                    ->boolean(),
+                    ->boolean()
+                    ->action(function ($record, $column) {
+                        $name = $column->getName();
+                        $record->update([
+                            $name => !$record->$name
+                        ]);
+                    }),
                 Tables\Columns\TextColumn::make('tahun_ajaran.tahun')
                     ->numeric()
                     ->sortable(),

@@ -6,6 +6,7 @@ use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Table;
 use App\Models\M009PenilaianDosen;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Hidden;
@@ -33,7 +34,18 @@ class PenilaianDosen extends BaseWidget
                     if (auth()->user()->hasRole('super_admin')) {
                         return M009PenilaianDosenResource::getEloquentQuery();
                     } elseif (auth()->user()->hasRole('mahasiswa')) {
-                        return M009PenilaianDosenResource::getEloquentQuery()->whereIn('kelas_mahasiswa_id', auth()->user()->mahasiswa->kelas_mahasiswa->pluck('id')->toArray() ?? null);
+                        $penilaianIds = auth()->user()->mahasiswa
+                            ->kelas_mahasiswa() 
+                            ->whereHas('kelas.semester', function ($query) {
+                                $query->where('aktif', true)->where('penilaian', true); 
+                            })
+                            ->with('penilaian') 
+                            ->get()
+                            ->flatMap(function ($kelasMahasiswa) {
+                                return $kelasMahasiswa->penilaian->pluck('id'); 
+                            })
+                            ->all();  
+                        return M009PenilaianDosenResource::getEloquentQuery()->whereIn('id', $penilaianIds ?? null);
                     }
                 }
             )
@@ -43,7 +55,7 @@ class PenilaianDosen extends BaseWidget
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kelas_mahasiswa.mahasiswa.nama')
                     ->numeric()
-                    ->hidden(fn () => auth()->user()->hasRole('mahasiswa'))
+                    ->hidden(fn() => auth()->user()->hasRole('mahasiswa'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('kelas_dosen.dosen.nama')
                     ->numeric()
@@ -52,11 +64,11 @@ class PenilaianDosen extends BaseWidget
             ->actions([
                 Tables\Actions\Action::make('sudah_mengisi')
                     ->disabled()
-                    ->hidden(fn (M009PenilaianDosen $record) => !($record->is_done))
+                    ->hidden(fn(M009PenilaianDosen $record) => !($record->is_done))
                     ->label('Sudah Mengisi')
                     ->badge(),
                 Tables\Actions\EditAction::make()
-                    ->hidden(fn (M009PenilaianDosen $record) => $record->is_done)
+                    ->hidden(fn(M009PenilaianDosen $record) => $record->is_done)
                     ->label('Isi Kuesioner')
                     ->form([
                         Wizard::make([
@@ -215,7 +227,7 @@ class PenilaianDosen extends BaseWidget
                                 ->schema([
                                     Radio::make('q_08')
                                         ->label('8. Beban kerja untuk matakuliah ini sesuai dengan SKS-nya')
-                                        ->hint(fn (M009PenilaianDosen $record) => "Matakuliah ini sejumlah ".($record->kelas_mahasiswa->kelas->mata_kuliah->sks ?? null)." SKS.")
+                                        ->hint(fn(M009PenilaianDosen $record) => "Matakuliah ini sejumlah " . ($record->kelas_mahasiswa->kelas->mata_kuliah->sks ?? null) . " SKS.")
                                         ->options([
                                             1 => "1",
                                             2 => "2",
@@ -304,11 +316,11 @@ class PenilaianDosen extends BaseWidget
                                             'required' => 'Saudara perlu memberi nilai terlebih dahulu',
                                         ])
                                         ->inlineLabel(false),
-                                    Hidden::make('is_done')->default(fn () => true),
+                                    Hidden::make('is_done')->default(fn() => true),
                                 ]),
 
                         ])->skippable()
-                        ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                            ->submitAction(new HtmlString(Blade::render(<<<BLADE
                         <x-filament::button
                             type="submit"
                             size="sm"

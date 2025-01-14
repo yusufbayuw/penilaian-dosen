@@ -28,6 +28,7 @@ class PortalPanelProvider extends PanelProvider
             ->default()
             ->id('portal')
             ->path('portal')
+            ->profile()
             ->login()
             ->colors([
                 'danger' => Color::Rose,
