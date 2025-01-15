@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7fafc;
+            background-color: #ffffff;
             padding: 20px;
         }
 
@@ -24,7 +25,7 @@
             font-size: 2rem;
             font-weight: bold;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         table {
@@ -33,7 +34,8 @@
             margin-top: 20px;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -68,9 +70,13 @@
         }
     </style>
 </head>
+
 <body>
     <div>
         <h1>Data Penilaian Semester</h1>
+        @if ($semester ?? null)
+            <h2>{{ $semester->nama }}</h2>
+        @endif
     </div>
     <table>
         <thead>
@@ -84,6 +90,7 @@
             </tr>
         </thead>
         <tbody>
+            @if ($data ?? false)
             @foreach ($data as $d)
             <tr>
                 <td>{{ $d->nama_mata_kuliah }}</td>
@@ -94,7 +101,9 @@
                 <td class="text-right">{{ number_format($d->rata_rata,2) }}</td>
             </tr>
             @endforeach
+            @endif
         </tbody>
     </table>
 </body>
+
 </html>
