@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Semester</title>
+    <title>Rekap Penilaian Dosen - {{ $semester->nama }} </title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,18 +17,19 @@
             max-width: 1200px;
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         table {
+            font-size: 1rm;
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
@@ -36,7 +37,7 @@
 
         th,
         td {
-            padding: 12px 15px;
+            padding: 5px 5px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
@@ -73,14 +74,12 @@
 
 <body>
     <div>
-        <h1>Data Penilaian Semester</h1>
-        @if ($semester ?? null)
-            <h2>{{ $semester->nama }}</h2>
-        @endif
+        <h1>Data Penilaian Semester {{ $semester->nama ? " - " . $semester->nama : null }}<</h1>
     </div>
     <table>
         <thead>
             <tr>
+                <th>NO</th>
                 <th>MATAKULIAH</th>
                 <th>KELAS</th>
                 <th>DOSEN</th>
@@ -91,16 +90,17 @@
         </thead>
         <tbody>
             @if ($data ?? false)
-            @foreach ($data as $d)
-            <tr>
-                <td>{{ $d->nama_mata_kuliah }}</td>
-                <td>{{ $d->nama_kelas }}</td>
-                <td>{{ $d->nama_dosen }}</td>
-                <td class="text-right">{{ $d->total_nilai }}</td>
-                <td class="text-right">{{ $d->jumlah_penilai }}</td>
-                <td class="text-right">{{ number_format($d->rata_rata,2) }}</td>
-            </tr>
-            @endforeach
+                @foreach ($data as $key => $d)
+                    <tr>
+                        <td>{{ $key+1 }}</td>
+                        <td>{{ $d->nama_mata_kuliah }}</td>
+                        <td>{{ $d->nama_kelas }}</td>
+                        <td>{{ $d->nama_dosen }}</td>
+                        <td class="text-right">{{ $d->total_nilai }}</td>
+                        <td class="text-right">{{ $d->jumlah_penilai }}</td>
+                        <td class="text-right">{{ number_format($d->rata_rata, 2) }}</td>
+                    </tr>
+                @endforeach
             @endif
         </tbody>
     </table>

@@ -112,7 +112,7 @@ class M009RekapPenilaianDosenResource extends Resource
                                         'semester' => $record,
                                     ])
                                 )->setPaper('a4', 'landscape')->stream();
-                            }, "Penilaian Dosen Per Semester - ". $record->nama . date('Y-d-m') . '.pdf');
+                            }, "Penilaian Dosen Per Semester - ". $record->nama . " - " . date('Y-d-m') . '.pdf');
                         }
                         ),
             ])

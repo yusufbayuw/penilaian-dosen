@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Auth\Login;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
@@ -16,9 +17,11 @@ use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
+use Swis\Filament\Backgrounds\FilamentBackgroundsPlugin;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Swis\Filament\Backgrounds\ImageProviders\Triangles;
 
 class PortalPanelProvider extends PanelProvider
 {
@@ -29,7 +32,7 @@ class PortalPanelProvider extends PanelProvider
             ->id('portal')
             ->path('portal')
             ->profile()
-            ->login()
+            ->login(Login::class)
             ->colors([
                 'danger' => Color::Rose,
                 'gray' => Color::Gray,
@@ -61,6 +64,10 @@ class PortalPanelProvider extends PanelProvider
             ])
             ->plugins([
                 FilamentShieldPlugin::make(),
+                FilamentBackgroundsPlugin::make()
+                    ->imageProvider(
+                        Triangles::make()
+                    ),
             ])
             ->authMiddleware([
                 Authenticate::class,

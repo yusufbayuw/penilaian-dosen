@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
 
         M004Dosen::create([
             "nidn" => "2020002",
-            "nama" => "Dr. Happy Valentine",
+            "nama" => "Consectetur Elit, PhD",
             "aktif" => true,
         ]);
 
@@ -71,58 +71,10 @@ class DatabaseSeeder extends Seeder
         
         M005Mahasiswa::create([
             "npm" => "2501002",
-            "nama" => "Lorem Ipsum",
-            "aktif" => true,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501003",
-            "nama" => "Consectetur Elit",
-            "aktif" => false,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501004",
             "nama" => "Adipiscing Veniam",
             "aktif" => true,
         ]);
         
-        M005Mahasiswa::create([
-            "npm" => "2501005",
-            "nama" => "Tempor Incididunt",
-            "aktif" => false,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501006",
-            "nama" => "Labore Dolore",
-            "aktif" => true,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501007",
-            "nama" => "Magna Aliqua",
-            "aktif" => true,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501008",
-            "nama" => "Ut Enim",
-            "aktif" => false,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501009",
-            "nama" => "Minim Veniam",
-            "aktif" => true,
-        ]);
-        
-        M005Mahasiswa::create([
-            "npm" => "2501010",
-            "nama" => "Nostrud Exercitation",
-            "aktif" => false,
-        ]);
-
         M006Kelas::create([
             "nama" => "Pengantar Kriptografi - 2025",
             "kode" => "25001",
@@ -150,44 +102,5 @@ class DatabaseSeeder extends Seeder
             "mahasiswa_id" => 2,
         ]);
 
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 3,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 4,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 5,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 6,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 7,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 8,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 9,
-        ]);
-
-        M007KelasMahasiswa::create([
-            "kelas_id" => 1,
-            "mahasiswa_id" => 10,
-        ]);
     }
 }
