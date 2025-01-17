@@ -86,6 +86,7 @@
                 <th class="text-right">TOTAL NILAI</th>
                 <th class="text-right">JUMLAH PENILAI</th>
                 <th class="text-right">RATA-RATA</th>
+                <th class="text-right">PERSENTASE</th>
             </tr>
         </thead>
         <tbody>
@@ -99,6 +100,7 @@
                         <td class="text-right">{{ $d->total_nilai }}</td>
                         <td class="text-right">{{ $d->jumlah_penilai }}</td>
                         <td class="text-right">{{ number_format($d->rata_rata, 2) }}</td>
+                        <td class="text-right">{{ number_format($d->rata_rata/48, 2) . " %" }}</td>
                     </tr>
                 @endforeach
             @endif
