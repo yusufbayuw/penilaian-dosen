@@ -33,7 +33,7 @@ class M005MahasiswaResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('npm')
                     ->label('NPM')
-                    ->unique()
+                    ->unique(ignoreRecord:true)
                     ->required(),
                 Forms\Components\TextInput::make('nama')
                     ->required(),

@@ -34,7 +34,7 @@ class M004DosenResource extends Resource
                 Forms\Components\TextInput::make('nidn')
                     ->required()
                     ->label("NIDN")
-                    ->unique(),
+                    ->unique(ignoreRecord:true),
                 Forms\Components\TextInput::make('nama')
                     ->required(),
                 Forms\Components\Toggle::make('aktif')
