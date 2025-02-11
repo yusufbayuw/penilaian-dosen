@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -25,6 +26,7 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name',
         'email',
+        'username',
         'password',
     ];
 
@@ -64,5 +66,10 @@ class User extends Authenticatable implements FilamentUser
     public function dosen(): BelongsTo
     {
         return $this->belongsTo(M004Dosen::class, 'dosen_id');
+    }
+
+    public function prodi(): BelongsToMany
+    {
+        return $this->belongsToMany(M010Prodi::class, 'prodi_users', 'user_id', 'prodi_id');
     }
 }

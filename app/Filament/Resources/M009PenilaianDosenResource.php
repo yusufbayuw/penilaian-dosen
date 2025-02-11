@@ -30,6 +30,21 @@ class M009PenilaianDosenResource extends Resource
 
     protected static ?string $navigationGroup = 'Penilaian';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $user = auth()->user();
+
+        if ($user->hasRole('super_admin')) {
+            return parent::getEloquentQuery();
+        } 
+
+        $userProdiIds = $user->prodi()->pluck('m010_prodis.id')->toArray();
+
+        return parent::getEloquentQuery()->whereHas('kelas_dosen.kelas.mata_kuliah.prodi', function ($query) use ($userProdiIds) {
+            $query->whereIn('id', $userProdiIds);
+        });
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -102,7 +117,7 @@ class M009PenilaianDosenResource extends Resource
                             Column::make('q_11'),
                             Column::make('q_12'),
                         ])
-                        ->withFilename(fn (M009PenilaianDosen $record) => "Penilaian-Dosen-".date('Y-m-d').".xlsx")
+                        ->withFilename(fn(M009PenilaianDosen $record) => "Penilaian-Dosen-" . date('Y-m-d') . ".xlsx")
                         ->modifyQueryUsing(fn($query) => $query->where('is_done', true)),
                 ])
             ])

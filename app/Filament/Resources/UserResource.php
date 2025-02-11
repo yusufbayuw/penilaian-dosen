@@ -43,13 +43,24 @@ class UserResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
                     ->dehydrateStateUsing(static fn (null|string $state): null|string => filled($state) ? Hash::make($state) : null,)
                     ->dehydrated(static fn (null|string $state): bool => filled($state)),
                 Forms\Components\Select::make('dosen_id')
                     ->relationship('dosen', 'nama'),
                 Forms\Components\Select::make('mahasiswa_id')
                     ->relationship('mahasiswa', 'nama'),
+                Forms\Components\Select::make('prodi')
+                    ->relationship('prodi', 'nama')
+                    ->label('Program Studi')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
+                Forms\Components\Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
+                
 
             ]);
     }
@@ -64,7 +75,8 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -73,12 +85,14 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('dosen.id')
+                Tables\Columns\TextColumn::make('dosen.nama')
                     ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('mahasiswa.id')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('mahasiswa.nama')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('username')
                     ->searchable(),
             ])

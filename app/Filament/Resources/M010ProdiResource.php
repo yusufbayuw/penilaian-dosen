@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\M003MataKuliahResource\Pages;
-use App\Filament\Resources\M003MataKuliahResource\RelationManagers;
-use App\Models\M003MataKuliah;
+use App\Filament\Resources\M010ProdiResource\Pages;
+use App\Filament\Resources\M010ProdiResource\RelationManagers;
+use App\Models\M010Prodi;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,33 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class M003MataKuliahResource extends Resource
+class M010ProdiResource extends Resource
 {
-    protected static ?string $model = M003MataKuliah::class;
+    protected static ?string $model = M010Prodi::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-beaker';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $slug = 'mata-kuliah';
+    protected static ?string $slug = 'prodi';
 
-    protected static ?string $modelLabel = 'Mata Kuliah';
+    protected static ?string $modelLabel = 'Prodi';
 
-    protected static ?string $navigationLabel = 'Mata Kuliah';
+    protected static ?string $navigationLabel = 'Prodi';
     
     protected static ?string $navigationGroup = 'Master Data';
-    
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('kode'),
-                Forms\Components\Select::make('prodi_id')
-                    ->relationship('prodi', 'nama')
+                Forms\Components\TextInput::make('nama')
                     ->required(),
-                Forms\Components\TextInput::make('nama'),
-                Forms\Components\TextInput::make('sks')
-                    ->numeric(),
-                Forms\Components\Toggle::make('aktif')
-                    ->default(true),
             ]);
     }
 
@@ -47,17 +40,8 @@ class M003MataKuliahResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('prodi.nama')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sks')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -84,7 +68,7 @@ class M003MataKuliahResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageM003MataKuliahs::route('/'),
+            'index' => Pages\ManageM010Prodis::route('/'),
         ];
     }
 }

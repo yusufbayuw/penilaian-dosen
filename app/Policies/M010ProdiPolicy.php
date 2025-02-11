@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\M002Semester;
+use App\Models\M010Prodi;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class M002SemesterPolicy
+class M010ProdiPolicy
 {
     use HandlesAuthorization;
 
@@ -15,15 +15,15 @@ class M002SemesterPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_m009::rekap::penilaian::dosen');
+        return $user->can('view_any_m010::prodi');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, M002Semester $m002Semester): bool
+    public function view(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('view_m009::rekap::penilaian::dosen');
+        return $user->can('view_m010::prodi');
     }
 
     /**
@@ -31,23 +31,23 @@ class M002SemesterPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_m009::rekap::penilaian::dosen');
+        return $user->can('create_m010::prodi');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, M002Semester $m002Semester): bool
+    public function update(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('update_m009::rekap::penilaian::dosen');
+        return $user->can('update_m010::prodi');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, M002Semester $m002Semester): bool
+    public function delete(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('delete_m009::rekap::penilaian::dosen');
+        return $user->can('delete_m010::prodi');
     }
 
     /**
@@ -55,15 +55,15 @@ class M002SemesterPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_m009::rekap::penilaian::dosen');
+        return $user->can('delete_any_m010::prodi');
     }
 
     /**
      * Determine whether the user can permanently delete.
      */
-    public function forceDelete(User $user, M002Semester $m002Semester): bool
+    public function forceDelete(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('force_delete_m009::rekap::penilaian::dosen');
+        return $user->can('force_delete_m010::prodi');
     }
 
     /**
@@ -71,15 +71,15 @@ class M002SemesterPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_m009::rekap::penilaian::dosen');
+        return $user->can('force_delete_any_m010::prodi');
     }
 
     /**
      * Determine whether the user can restore.
      */
-    public function restore(User $user, M002Semester $m002Semester): bool
+    public function restore(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('restore_m009::rekap::penilaian::dosen');
+        return $user->can('restore_m010::prodi');
     }
 
     /**
@@ -87,15 +87,15 @@ class M002SemesterPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_m009::rekap::penilaian::dosen');
+        return $user->can('restore_any_m010::prodi');
     }
 
     /**
      * Determine whether the user can replicate.
      */
-    public function replicate(User $user, M002Semester $m002Semester): bool
+    public function replicate(User $user, M010Prodi $m010Prodi): bool
     {
-        return $user->can('replicate_m009::rekap::penilaian::dosen');
+        return $user->can('replicate_m010::prodi');
     }
 
     /**
@@ -103,6 +103,6 @@ class M002SemesterPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_m009::rekap::penilaian::dosen');
+        return $user->can('reorder_m010::prodi');
     }
 }
