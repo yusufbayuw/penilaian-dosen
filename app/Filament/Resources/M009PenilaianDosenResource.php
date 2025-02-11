@@ -34,7 +34,7 @@ class M009PenilaianDosenResource extends Resource
     {
         $user = auth()->user();
 
-        if ($user->hasRole('super_admin')) {
+        if ($user->hasRole('super_admin', 'mahasiswa')) {
             return parent::getEloquentQuery();
         } 
 

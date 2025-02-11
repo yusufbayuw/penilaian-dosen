@@ -17,10 +17,11 @@ use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\M009RekapPenilaianDosenResource\Pages;
 use App\Filament\Resources\M009RekapPenilaianDosenResource\RelationManagers;
+use App\Models\M009RekapPenilaianDosen;
 
 class M009RekapPenilaianDosenResource extends Resource
 {
-    protected static ?string $model = M002Semester::class;
+    protected static ?string $model = M009RekapPenilaianDosen::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-chart-bar';
 

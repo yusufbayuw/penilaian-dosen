@@ -44,8 +44,8 @@ class PenilaianDosen extends BaseWidget
                             ->flatMap(function ($kelasMahasiswa) {
                                 return $kelasMahasiswa->penilaian->pluck('id'); 
                             })
-                            ->all();  
-                        return M009PenilaianDosenResource::getEloquentQuery()->whereIn('id', $penilaianIds ?? null);
+                            ->all();
+                        return M009PenilaianDosen::whereIn('id', $penilaianIds ?? null);
                     }
                 }
             )
