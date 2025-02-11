@@ -76,7 +76,7 @@ class M009RekapPenilaianDosenResource extends Resource
                     ->icon('heroicon-o-document-arrow-down')
                     ->button()
                     ->action(
-                        function (M002Semester $record) {
+                        function (M009RekapPenilaianDosen $record) {
                             $semesterId = $record->id;
 
                             // Query untuk mengambil data penilaian berdasarkan semester
