@@ -34,7 +34,7 @@ class M009PenilaianDosenResource extends Resource
     {
         $user = auth()->user();
 
-        if ($user->hasRole('super_admin', 'mahasiswa')) {
+        if ($user->hasRole(['super_admin', 'mahasiswa'])) {
             return parent::getEloquentQuery();
         } 
 
@@ -87,12 +87,13 @@ class M009PenilaianDosenResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\EditAction::make(),
+                //Tables\Actions\DeleteAction::make(),
             ])
             ->headerActions([
                 ExportAction::make()->exports([
