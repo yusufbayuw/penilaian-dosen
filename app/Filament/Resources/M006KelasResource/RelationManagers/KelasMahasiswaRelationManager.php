@@ -106,7 +106,6 @@ class KelasMahasiswaRelationManager extends RelationManager
                                     ->danger()
                                     ->send();
                         }
-                        // Insert participants with certificate_id
 
                     })
                     ->color('success'),
