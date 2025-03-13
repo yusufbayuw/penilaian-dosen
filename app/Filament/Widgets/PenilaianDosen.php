@@ -16,6 +16,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Placeholder;
 use Filament\Widgets\TableWidget as BaseWidget;
 use App\Filament\Resources\M009PenilaianDosenResource;
+use Filament\Forms\Components\Textarea;
 
 class PenilaianDosen extends BaseWidget
 {
@@ -316,6 +317,12 @@ class PenilaianDosen extends BaseWidget
                                             'required' => 'Saudara perlu memberi nilai terlebih dahulu',
                                         ])
                                         ->inlineLabel(false),
+                                ]),
+                            Wizard\Step::make('13')
+                                ->label(' ')
+                                ->completedIcon('heroicon-m-check-circle')
+                                ->schema([
+                                    Textarea::make('saran'),
                                     Hidden::make('is_done')->default(fn() => true),
                                 ]),
 
@@ -342,6 +349,7 @@ class PenilaianDosen extends BaseWidget
                         $record->q_10 = $data['q_10'];
                         $record->q_11 = $data['q_11'];
                         $record->q_12 = $data['q_12'];
+                        $record->saran = $data['saran'];
                         $record->is_done = true;
                         $record->save();
                     }),

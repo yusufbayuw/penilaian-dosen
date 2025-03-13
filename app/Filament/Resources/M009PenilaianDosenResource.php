@@ -78,6 +78,7 @@ class M009PenilaianDosenResource extends Resource
                 Tables\Columns\TextColumn::make('q_10'),
                 Tables\Columns\TextColumn::make('q_11'),
                 Tables\Columns\TextColumn::make('q_12'),
+                Tables\Columns\TextColumn::make('saran'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -117,6 +118,7 @@ class M009PenilaianDosenResource extends Resource
                             Column::make('q_10'),
                             Column::make('q_11'),
                             Column::make('q_12'),
+                            Column::make('saran')
                         ])
                         ->withFilename(fn(M009PenilaianDosen $record) => "Penilaian-Dosen-" . date('Y-m-d') . ".xlsx")
                         ->modifyQueryUsing(fn($query) => $query->where('is_done', true)),

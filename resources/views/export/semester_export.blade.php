@@ -9,6 +9,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            font-size: 11px;
             background-color: #ffffff;
             padding: 20px;
         }
@@ -74,19 +75,34 @@
 
 <body>
     <div>
-        <h1>Data Penilaian Semester {{ $semester->nama ? " - " . $semester->nama : null }}<</h1>
+        <h1>Data Penilaian Semester {{ $semester->nama ? " - " . $semester->nama : null }}</h1>
     </div>
     <table>
         <thead>
             <tr>
-                <th>NO</th>
-                <th>MATAKULIAH</th>
-                <th>KELAS</th>
-                <th>DOSEN</th>
-                <th class="text-right">TOTAL NILAI</th>
-                <th class="text-right">JUMLAH PENILAI</th>
-                <th class="text-right">RATA-RATA</th>
-                <th class="text-right">PERSENTASE</th>
+                <th rowspan="2">NO</th>
+                <th rowspan="2">MATAKULIAH</th>
+                <th rowspan="2">KELAS</th>
+                <th rowspan="2">DOSEN</th>
+                <th class="text-right" rowspan="2">TOTAL NILAI</th>
+                <th class="text-right" rowspan="2">JUMLAH PENILAI</th>
+                <th colspan="12" class="text-center">DETAIL NILAI SATUAN (RATA-RATA)</th>
+                <th class="text-right" rowspan="2">RATA-RATA</th>
+                {{-- <th class="text-right">PERSENTASE</th> --}}
+            </tr>
+            <tr>
+                <th>01</th>
+                <th>02</th>
+                <th>03</th>
+                <th>04</th>
+                <th>05</th>
+                <th>06</th>
+                <th>07</th>
+                <th>08</th>
+                <th>09</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
             </tr>
         </thead>
         <tbody>
@@ -99,8 +115,21 @@
                         <td>{{ $d->nama_dosen }}</td>
                         <td class="text-right">{{ $d->total_nilai }}</td>
                         <td class="text-right">{{ $d->jumlah_penilai }}</td>
-                        <td class="text-right">{{ number_format($d->rata_rata, 2) }}</td>
-                        <td class="text-right">{{ number_format($d->rata_rata/48, 2) . " %" }}</td>
+
+                        <td>{{ number_format($d->nilai_01, 2) }}</td>
+                        <td>{{ number_format($d->nilai_02, 2) }}</td>
+                        <td>{{ number_format($d->nilai_03, 2) }}</td>
+                        <td>{{ number_format($d->nilai_04, 2) }}</td>
+                        <td>{{ number_format($d->nilai_05, 2) }}</td>
+                        <td>{{ number_format($d->nilai_06, 2) }}</td>
+                        <td>{{ number_format($d->nilai_07, 2) }}</td>
+                        <td>{{ number_format($d->nilai_08, 2) }}</td>
+                        <td>{{ number_format($d->nilai_09, 2) }}</td>
+                        <td>{{ number_format($d->nilai_10, 2) }}</td>
+                        <td>{{ number_format($d->nilai_11, 2) }}</td>
+                        <td>{{ number_format($d->nilai_12, 2) }}</td>
+
+                        <td class="text-right">{{ number_format(($d->rata_rata / 12), 2) }}</td>
                     </tr>
                 @endforeach
             @endif

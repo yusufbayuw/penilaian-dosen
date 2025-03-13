@@ -70,7 +70,7 @@ class M009RekapPenilaianDosenResource extends Resource
                 //
             ])
             ->actions([
-                //Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('export')
                     ->color('primary')
                     ->icon('heroicon-o-document-arrow-down')
@@ -86,6 +86,18 @@ class M009RekapPenilaianDosenResource extends Resource
                                     d.nama AS nama_dosen,
                                     mk.nama AS nama_mata_kuliah,
                                     k.nama AS nama_kelas,
+                                    AVG(pd.q_01) AS nilai_01,
+                                    AVG(pd.q_02) AS nilai_02,
+                                    AVG(pd.q_03) AS nilai_03,
+                                    AVG(pd.q_04) AS nilai_04,
+                                    AVG(pd.q_05) AS nilai_05,
+                                    AVG(pd.q_06) AS nilai_06,
+                                    AVG(pd.q_07) AS nilai_07,
+                                    AVG(pd.q_08) AS nilai_08,
+                                    AVG(pd.q_09) AS nilai_09,
+                                    AVG(pd.q_10) AS nilai_10,
+                                    AVG(pd.q_11) AS nilai_11,
+                                    AVG(pd.q_12) AS nilai_12,
                                     SUM(pd.q_01 + pd.q_02 + pd.q_03 + pd.q_04 + pd.q_05 + pd.q_06 + pd.q_07 + pd.q_08 + pd.q_09 + pd.q_10 + pd.q_11 + pd.q_12) AS total_nilai,
                                     COUNT(CASE WHEN pd.is_done = 1 THEN 1 END) AS jumlah_penilai,
                                     CASE 
@@ -105,21 +117,33 @@ class M009RekapPenilaianDosenResource extends Resource
                             } else {
                                 // Ambil ID prodi yang dimiliki user secara eksplisit menyebutkan nama tabel (untuk menghindari ambiguitas)
                                 $userProdiIds = auth()->user()->prodi()->pluck('m010_prodis.id')->toArray();
-    
+
                                 // Pastikan array tidak kosong agar query valid
                                 if (empty($userProdiIds)) {
                                     // Misalnya, jika user tidak punya prodi, kembalikan query kosong atau lakukan penanganan lain
                                     $userProdiIds = [0];
                                 }
-    
+
                                 // Ubah array menjadi string, misalnya "1,2,3"
                                 $prodiIdsString = implode(',', $userProdiIds);
-    
+
                                 $query = "
                                         SELECT 
                                             d.nama AS nama_dosen,
                                             mk.nama AS nama_mata_kuliah,
                                             k.nama AS nama_kelas,
+                                            AVG(pd.q_01) AS nilai_01,
+                                            AVG(pd.q_02) AS nilai_02,
+                                            AVG(pd.q_03) AS nilai_03,
+                                            AVG(pd.q_04) AS nilai_04,
+                                            AVG(pd.q_05) AS nilai_05,
+                                            AVG(pd.q_06) AS nilai_06,
+                                            AVG(pd.q_07) AS nilai_07,
+                                            AVG(pd.q_08) AS nilai_08,
+                                            AVG(pd.q_09) AS nilai_09,
+                                            AVG(pd.q_10) AS nilai_10,
+                                            AVG(pd.q_11) AS nilai_11,
+                                            AVG(pd.q_12) AS nilai_12,
                                             SUM(pd.q_01 + pd.q_02 + pd.q_03 + pd.q_04 + pd.q_05 + pd.q_06 + pd.q_07 + pd.q_08 + pd.q_09 + pd.q_10 + pd.q_11 + pd.q_12) AS total_nilai,
                                             COUNT(CASE WHEN pd.is_done = 1 THEN 1 END) AS jumlah_penilai,
                                             CASE 
@@ -145,14 +169,18 @@ class M009RekapPenilaianDosenResource extends Resource
                             $data = DB::select($query, ['semesterId' => $semesterId]);
 
                             //Pdf::loadView('export.semester_export')->setPaper('a4', 'potrait')->download('invoice.pdf');//view('export.semester_export', ['data' => $data]);
-                            return response()->streamDownload(function () use ($data, $record) {
+                            return response()->stream(function () use ($data, $record) {
                                 echo Pdf::loadHtml(
                                     Blade::render('export.semester_export', [
-                                        'data' => $data,
+                                        'data'     => $data,
                                         'semester' => $record,
                                     ])
                                 )->setPaper('a4', 'landscape')->stream();
-                            }, "Penilaian Dosen Per Semester - " . $record->nama . " - " . date('Y-d-m') . '.pdf');
+                            }, 200, [
+                                "Content-Type"        => "application/pdf",
+                                "Content-Disposition" => "inline; filename=\"Penilaian Dosen Per Semester - " . $record->nama . " - " . date('Y-d-m') . ".pdf\""
+                            ]);
+                            
                         }
                     ),
             ])
